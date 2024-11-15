@@ -1,0 +1,181 @@
+.contentPlaylist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.playlistItem {
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.playlistTrack {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.trackTitle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 447px;
+}
+
+.trackTitleImage {
+  width: 51px;
+  height: 51px;
+  padding: 16px;
+  background: #313131;
+  border: none;
+  /* background: transparent; */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-right: 17px;
+}
+
+.trackTitleSvg {
+  width: 18px;
+  height: 17px;
+  fill: transparent;
+  stroke: #4e4e4e;
+}
+
+.trackTitleSpan {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #4e4e4e;
+}
+
+.trackTitleLink {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.trackAuthor {
+  width: 321px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.trackAuthorLink {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.trackAlbum {
+  width: 245px;
+}
+
+.trackAlbumLink {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #696969;
+}
+
+.trackTimeSvg {
+  width: 14px;
+  height: 12px;
+  margin-right: 17px;
+  fill: transparent;
+  stroke: #696969;
+}
+
+.trackTimeText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  color: #696969;
+}
+
+.pulsingCircle {
+  width: 16px;
+  height: 16px;
+  background-color: #b672ff;
+  border-radius: 8px;
+  display: block;
+  animation: bubble_out 0.6s ease-in-out infinite both;
+}
+
+.staticCircle {
+  width: 16px;
+  height: 16px;
+  background-color: #b672ff;
+  border-radius: 8px;
+  display: block;
+}
+
+@keyframes bubble_out {
+  0%,
+  to {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+.trackPlayLikeSvg {
+  margin-left: 20px;
+  width: 14px;
+  height: 12px;
+  fill: transparent;
+  stroke: #696969;
+}
+
+.trackPlayLikeSvgActive {
+  fill: #b672ff;
+  stroke: #b672ff;
+}
+
+.trackPlayLikeBtn {
+  background: transparent;
+  border: none;
+  margin-right: 16px;
+}
