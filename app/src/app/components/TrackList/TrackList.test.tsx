@@ -40,6 +40,12 @@ describe('TrackList component', () => {
     ];
 
     store = mockStore({
+      filters: {
+        searchInputText: '',
+        selectedAuthor: [],
+        selectedDates: [],
+        selectedGenres: [],
+      },
       tracks: {
         currentTrack: null,
         favoriteList: [],
@@ -49,7 +55,7 @@ describe('TrackList component', () => {
     });
   });
 
-  it('should render a list of tracks', () => {
+  it('renders track list without errors', () => {
     render(
       <Provider store={store}>
         <TrackList tracks={tracks} togglePlay={jest.fn()} />
@@ -58,6 +64,33 @@ describe('TrackList component', () => {
 
     expect(screen.getByText('Hard Metal Intro')).toBeInTheDocument();
     expect(screen.getByText('Winniethemoog')).toBeInTheDocument();
+
+    const trackTitleLink = screen.getAllByText('Adrenelynne')[0];
+    expect(trackTitleLink).toBeInTheDocument();
+
+    const albumLink = screen.getAllByText('Adrenelynne')[1];
+    expect(albumLink).toBeInTheDocument();
+
     expect(screen.getByText('Tim Kulig')).toBeInTheDocument();
+  });
+
+  it('displays empty message when no tracks are available', () => {
+    store = mockStore({
+      filters: {},
+      tracks: {
+        currentTrack: null,
+        favoriteList: [],
+        trackList: [],
+      },
+      player: {},
+    });
+
+    render(
+      <Provider store={store}>
+        <TrackList tracks={[]} togglePlay={jest.fn()} />
+      </Provider>
+    );
+
+    expect(screen.getByText('Треки не найдены')).toBeInTheDocument();
   });
 });
