@@ -345,6 +345,7 @@ body {
   letter-spacing: 2px;
   color: #696969;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .playlist-title__svg {

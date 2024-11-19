@@ -7,6 +7,7 @@ interface Filters {
   selectedAuthor: string[];
   selectedDates: string[];
   selectedGenres: string[];
+  searchInputText: string;
 }
 
 const initialState: Filters = {
@@ -16,6 +17,7 @@ const initialState: Filters = {
   selectedAuthor: [],
   selectedDates: [],
   selectedGenres: [],
+  searchInputText:"",
 };
 
 const filterSlice = createSlice({
@@ -49,6 +51,9 @@ const filterSlice = createSlice({
     setFilters: (state, action: PayloadAction<Filters>) => {
       return action.payload;
     },
+    setSearchInputText: (state, action: PayloadAction<string>) => {
+      state.searchInputText = action.payload;
+    },
   },
 });
 
@@ -60,5 +65,6 @@ export const {
   deleteDatesFilter,
   deleteGenresFilter,
   setFilters,
+  setSearchInputText,
 } = filterSlice.actions;
 export default filterSlice.reducer;

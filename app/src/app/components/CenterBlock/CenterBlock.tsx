@@ -76,9 +76,38 @@ const CenterBlock = ({ togglePlay }) => {
     };
     getAllTracks();
   }, []);
+  const [tracksToDisplay, setTracksToDisplay] = useState(
+    isFavorites ? favoriteTracks : currentTracks
+  );
 
-  const tracksToDisplay = isFavorites ? favoriteTracks : currentTracks;
-
+  const [sortMethod, setSortMethod] = useState("asc");
+  const handleClickChangeSortMethod = () => {
+    setSortMethod(
+      sortMethod === "asc" ? "desc" : sortMethod === "desc" ? "" : "asc"
+    );
+    switch (sortMethod) {
+      case "asc":
+        setTracksToDisplay([
+          ...tracksToDisplay].sort((a: TrackType, b: TrackType) => {
+            return +a.release_date.slice(0, 4) - +b.release_date.slice(0, 4);
+          }),
+        );
+        break;
+      case "desc":
+        setTracksToDisplay([
+          ...tracksToDisplay].sort((a: TrackType, b: TrackType) => {
+            return +b.release_date.slice(0, 4) - +a.release_date.slice(0, 4);
+          }),
+        );
+        break;
+      default:
+        tracksToDisplay;
+    }
+  };
+  useEffect(() => {
+    setTracksToDisplay(isFavorites ? favoriteTracks : currentTracks);
+  }, [favoriteTracks, currentTracks]);
+  console.log(sortMethod);
   return (
     <div className="main__centerblock centerblock">
       <Search />
@@ -87,7 +116,12 @@ const CenterBlock = ({ togglePlay }) => {
       <div className="centerblock__content playlist-content">
         <div className="content__title playlist-title">
           <div className="playlist-title__col col01">Трек</div>
-          <div className="playlist-title__col col02">Исполнитель</div>
+          <div
+            onClick={handleClickChangeSortMethod}
+            className="playlist-title__col col02 playlistTitleCol"
+          >
+            Исполнитель
+          </div>
           <div className="playlist-title__col col03">Альбом</div>
           <div className="playlist-title__col col04">
             <svg className="playlist-title__svg">

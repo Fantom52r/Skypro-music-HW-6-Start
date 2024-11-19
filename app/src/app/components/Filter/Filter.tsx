@@ -65,9 +65,14 @@ const Filter: React.FC = () => {
   const filterRef = useRef<HTMLDivElement>(null);
 
   const handleClickFilter = useCallback((selectedKey: keyof IsOpen) => {
+    const newObj = {
+      author: false,
+      date: false,
+      genre: false,
+    }
     setIsShowList((prev) => ({
-      ...prev,
-      [selectedKey]: !prev[selectedKey],
+      ...newObj,
+      [selectedKey]: !newObj[selectedKey],
     }));
   }, []);
 
@@ -99,6 +104,11 @@ const Filter: React.FC = () => {
           }`}
         >
           исполнителю
+          {selectedAuthor.length > 0 && (
+            <span className={styles.selectedAuthorCount}>
+              {selectedAuthor.length}
+            </span>
+          )}
         </button>
         {isShowList.author && (
           <div className={styles.filterBlock}>
@@ -129,6 +139,11 @@ const Filter: React.FC = () => {
           } `}
         >
           году выпуска
+          {selectedDates.length > 0 && (
+            <span className={styles.selectedAuthorCount}>
+              {selectedDates.length}
+            </span>
+          )}
         </button>
         {isShowList.date && (
           <div className={styles.filterBlock}>
@@ -159,6 +174,12 @@ const Filter: React.FC = () => {
           }`}
         >
           жанру
+
+          {selectedGenres.length > 0 && (
+            <span className={styles.selectedAuthorCount}>
+              {selectedGenres.length}
+            </span>
+          )}
         </button>
         {isShowList.genre && (
           <div className={styles.filterBlock}>

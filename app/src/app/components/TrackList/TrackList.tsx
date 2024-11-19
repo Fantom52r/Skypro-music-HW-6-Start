@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styles from "./TrackList.module.css";
 import { TrackType } from "../../../types";
 import {
@@ -18,6 +18,9 @@ import Track from "../track/Track";
 const TrackList = ({ tracks, togglePlay }) => {
   const [isAuthUser, setIsAuthUser] = useState<string | null>(null);
 
+  const inputSearchText = useSelector(
+    (state: RootState) => state.filters.searchInputText
+  );
   const selectedAuthor = useSelector(
     (state: RootState) => state.filters.selectedAuthor
   );
@@ -73,34 +76,57 @@ const TrackList = ({ tracks, togglePlay }) => {
   }, [isAuthUser, dispatch]);
   useEffect(() => {}, [favoriteTracks, trackList]);
 
-  const filteredTracks = tracks.filter((track) => {
+  const filteredCallBack = useCallback((track) => {
     if (selectedAuthor.length > 0 && !selectedAuthor.includes(track.author))
       return false;
-    if (selectedDates.length > 0 && !selectedDates.includes(track.release_date.slice(0, 4)))
+    if (
+      selectedDates.length > 0 &&
+      !selectedDates.includes(track.release_date.slice(0, 4))
+    )
       return false;
-    if (selectedGenres.length > 0 && !track.genre.some((el)=> selectedGenres.includes(el)))
+    if (
+      selectedGenres.length > 0 &&
+      !track.genre.some((el) => selectedGenres.includes(el))
+    )
       return false;
+    if (
+      inputSearchText &&
+      !track.name.toLowerCase().includes(inputSearchText.toLowerCase())
+    ) {
+      return false;
+    }
     return true;
-  });
+  }, [ selectedAuthor, selectedDates, selectedGenres, inputSearchText]);
 
-  console.log(selectedAuthor, selectedDates, selectedGenres,tracks);
+  const filteredTracks = useMemo(()=>{
+    return tracks.filter((track) => filteredCallBack(track))
+
+
+
+  }, [tracks,selectedAuthor, selectedDates, selectedGenres, inputSearchText]
+
+  );
 
   return (
     <div className={styles.contentPlaylist}>
-      {filteredTracks?.map((track: TrackType) => (
-        <Track
-          key={track._id}
-          track={track}
-          handleClickTrack={handleClickTrack}
-          currentTrack={currentTrack}
-          player={player}
-          handleClickLike={handleClickLike}
-          timeFormat={timeFormat}
-          favoriteTracks={favoriteTracks}
-          handleClickDisLike={handleClickDisLike}
-          isAuthUser={isAuthUser}
-        />
-      ))}
+      {filteredTracks.length > 0 ? (
+        filteredTracks?.map((track: TrackType) => (
+          <Track
+            key={track._id}
+            track={track}
+            handleClickTrack={handleClickTrack}
+            currentTrack={currentTrack}
+            player={player}
+            handleClickLike={handleClickLike}
+            timeFormat={timeFormat}
+            favoriteTracks={favoriteTracks}
+            handleClickDisLike={handleClickDisLike}
+            isAuthUser={isAuthUser}
+          />
+        ))
+      ) : (
+        <div className={styles.emptyPlaylist}>Треки не найдены</div>
+      )}
     </div>
   );
 };
