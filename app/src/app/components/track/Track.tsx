@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../TrackList/TrackList.module.css";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { getAllFavoriteTracks } from "../../../API/TrackApi";
+import { setFavoriteList } from "../../../store/features/trackSlice";
 
 const Track = ({
   track,
@@ -9,11 +13,14 @@ const Track = ({
   player,
   handleClickLike,
   timeFormat,
-  favoriteTracks,
   handleClickDisLike,
   isAuthUser,
 }) => {
+  const favoriteTracks = useSelector(
+    (state: RootState) => state.tracks.favoriteList
+  );
   const isLiked = favoriteTracks.some((element) => element._id === track._id);
+  const dispatch = useDispatch()
 
   const handleClickLikeTrack = () => {
     if (isAuthUser) {
@@ -26,7 +33,15 @@ const Track = ({
       toast.error("Необходимо авторизоваться");
     }
   };
-  useEffect(() => {}, [favoriteTracks]);
+  // useEffect(() => {
+  //   const getFavoriteTracks = async () => {
+  //     const response = await getAllFavoriteTracks();
+  //     if (response) {
+  //       dispatch(setFavoriteList(response.data));
+  //     }
+  //   };
+  //   getFavoriteTracks();
+  // }, []);
   return (
     <div key={track._id} className={styles.playlistItem}>
       <div className={styles.playlistTrack}>

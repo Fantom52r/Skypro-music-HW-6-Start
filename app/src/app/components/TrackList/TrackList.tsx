@@ -35,9 +35,7 @@ const TrackList = ({ tracks, togglePlay }) => {
     (state: RootState) => state?.tracks.currentTrack
   );
 
-  const favoriteTracks = useSelector(
-    (state: RootState) => state.tracks.favoriteList
-  );
+
 
   const trackList = useSelector((state: RootState) => state.tracks.trackList);
   const player = useSelector((state: RootState) => state.player);
@@ -74,7 +72,7 @@ const TrackList = ({ tracks, togglePlay }) => {
       setIsAuthUser(authUser);
     }
   }, [isAuthUser, dispatch]);
-  useEffect(() => {}, [favoriteTracks, trackList]);
+  useEffect(() => {}, [trackList]);
 
   const filteredCallBack = useCallback((track) => {
     if (selectedAuthor.length > 0 && !selectedAuthor.includes(track.author))
@@ -119,7 +117,6 @@ const TrackList = ({ tracks, togglePlay }) => {
             player={player}
             handleClickLike={handleClickLike}
             timeFormat={timeFormat}
-            favoriteTracks={favoriteTracks}
             handleClickDisLike={handleClickDisLike}
             isAuthUser={isAuthUser}
           />

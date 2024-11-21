@@ -47,19 +47,22 @@ const CenterBlock = ({ togglePlay }) => {
           setCurrentTracks(
             trackList.filter((track) => response.data.items.includes(track._id))
           );
-          console.log(
-            trackList.filter((track) => response.data.items.includes(track._id))
-          );
+
         }
       };
       getTrackByCompilationId();
       setIsFavorites(false);
     } else if (viewParam === "all") {
+      setIsFavorites(false);
       const getAllTracks = async () => {
         const response = await getData();
+        const responseFavorites = await getAllFavoriteTracks();
         if (response) {
           dispatch(setTracks(response));
           setCurrentTracks(response);
+        }
+        if (responseFavorites) {
+          dispatch(setFavoriteList(responseFavorites.data));
         }
       };
       getAllTracks();
@@ -75,7 +78,7 @@ const CenterBlock = ({ togglePlay }) => {
       }
     };
     getAllTracks();
-  }, []);
+  }, [favoriteTracks]);
   const [tracksToDisplay, setTracksToDisplay] = useState(
     isFavorites ? favoriteTracks : currentTracks
   );
@@ -87,17 +90,17 @@ const CenterBlock = ({ togglePlay }) => {
     );
     switch (sortMethod) {
       case "asc":
-        setTracksToDisplay([
-          ...tracksToDisplay].sort((a: TrackType, b: TrackType) => {
+        setTracksToDisplay(
+          [...tracksToDisplay].sort((a: TrackType, b: TrackType) => {
             return +a.release_date.slice(0, 4) - +b.release_date.slice(0, 4);
-          }),
+          })
         );
         break;
       case "desc":
-        setTracksToDisplay([
-          ...tracksToDisplay].sort((a: TrackType, b: TrackType) => {
+        setTracksToDisplay(
+          [...tracksToDisplay].sort((a: TrackType, b: TrackType) => {
             return +b.release_date.slice(0, 4) - +a.release_date.slice(0, 4);
-          }),
+          })
         );
         break;
       default:
@@ -107,7 +110,6 @@ const CenterBlock = ({ togglePlay }) => {
   useEffect(() => {
     setTracksToDisplay(isFavorites ? favoriteTracks : currentTracks);
   }, [favoriteTracks, currentTracks]);
-  console.log(sortMethod);
   return (
     <div className="main__centerblock centerblock">
       <Search />

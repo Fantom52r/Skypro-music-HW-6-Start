@@ -7,6 +7,10 @@ import Image from "next/image";
 import { registerUser } from "../API/TrackApi";
 import { useRouter } from "next/router";
 import { setUserName } from "../store/features/authSlice";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+
+
 const Registration = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -23,6 +27,9 @@ const Registration = () => {
       const response = await registerUser({ username, email, password });
       if (response) {
         router.push("/login");
+      }
+      else{
+        toast.error("Ошибка при регистрации");
       }
     } else {
       toast.error("Пароли не совпадают");
@@ -82,6 +89,8 @@ const Registration = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
+
     </div>
   );
 };

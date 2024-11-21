@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import { getAccessToken, loginUser } from "../API/TrackApi";
 import { useDispatch } from "react-redux";
 import { setUserName } from "../store/features/authSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthPages = () => {
   const [login, setLogin] = useState<string>("");
@@ -21,11 +23,11 @@ const AuthPages = () => {
       dispatch(setUserName(response.username));
       localStorage.setItem("userName", response.username);
       const token = await getAccessToken({ email: login, password });
-      localStorage.setItem("accessToken",token.access)
-      localStorage.setItem("refreshToken",token.refresh)
+      localStorage.setItem("accessToken", token.access);
+      localStorage.setItem("refreshToken", token.refresh);
       router.push("/home");
     } catch (error) {
-      console.error(error);
+      toast.error("Неверный логин или Пароль");
     }
   };
   return (
@@ -68,6 +70,7 @@ const AuthPages = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
