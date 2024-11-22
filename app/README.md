@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Music Player App
 
-## Getting Started
+**Music Player App** — это приложение для воспроизведения, сортировки и фильтрации музыкальных треков с возможностью добавления их в избранное.
 
-First, run the development server:
+## Функционал приложения
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Главные возможности
+- **Просмотр треков**: отображение списка треков, их названий, исполнителей, альбомов, года выпуска и длительности.
+- **Фильтрация**: фильтрация треков по исполнителю, жанру и году выпуска.
+- **Поиск**: строка поиска для быстрого нахождения трека по его названию.
+- **Сортировка**: сортировка треков по году выпуска в порядке возрастания или убывания.
+- **Добавление в избранное**: управление списком избранных треков с сохранением их в учетной записи.
+- **Просмотр подборок**: отображение плейлистов из различных подборок.
+- **Управление воспроизведением**: включение, пауза, переключение треков, режимы случайного воспроизведения (shuffle) и зацикливания (loop).
+- **Регулировка громкости**: управление уровнем громкости.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Поддержка авторизации
+- Возможность добавлять треки в избранное доступна только авторизованным пользователям.
+- Управление сеансом пользователя: вход, выход и хранение токенов доступа.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Используемые технологии
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Frontend
+- **React**: библиотека для построения пользовательского интерфейса.
+- **Redux Toolkit**: управление состоянием приложения.
+- **React Router**: маршрутизация между страницами.
+- **TypeScript**: статическая типизация для обеспечения стабильности кода.
+- **CSS Modules**: стилизация компонентов.
 
-## Learn More
+### Backend API
+- **REST API**: взаимодействие с сервером для получения треков, избранного и подборок.
 
-To learn more about Next.js, take a look at the following resources:
+## Установка и запуск
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Локальная установка
+1. Убедитесь, что у вас установлен **Node.js** версии 14+.
+2. Склонируйте репозиторий и перейдите в директорию проекта:
+    ```sh
+    git clone <repository_url>
+    cd <project_directory>
+    ```
+3. Установите зависимости:
+    ```sh
+    npm install
+    ```
+4. Запустите приложение:
+    ```sh
+    npm start
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Запуск в production
+1. Постройте production-сборку:
+    ```sh
+    npm run build
+    ```
+2. Разверните сборку на сервере (например, через **Vercel** или **Netlify**).
 
-## Deploy on Vercel
+## Структура проекта
+- `src/components`: все основные компоненты, включая `PlayerBar`, `TrackList`, `Filter`, `SideBar` и другие.
+- `src/store`: Redux Toolkit слайсы и настройки хранилища.
+- `src/types`: типы для TypeScript.
+- `src/API`: функции для взаимодействия с сервером.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Тестирование
+Для запуска тестов используйте команду:
+```sh
+npm test
