@@ -31,6 +31,7 @@ const Header = () => {
       localStorage.setItem("accessToken", "");
       localStorage.setItem("refreshToken", "");
       setIsAuth("");
+      window.location.reload()
     } else {
       handleNavigate("/login");
     }
