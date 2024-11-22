@@ -35,8 +35,6 @@ const TrackList = ({ tracks, togglePlay }) => {
     (state: RootState) => state?.tracks.currentTrack
   );
 
-
-
   const trackList = useSelector((state: RootState) => state.tracks.trackList);
   const player = useSelector((state: RootState) => state.player);
   const dispatch = useDispatch();
@@ -74,36 +72,44 @@ const TrackList = ({ tracks, togglePlay }) => {
   }, [isAuthUser, dispatch]);
   useEffect(() => {}, [trackList]);
 
-  const filteredCallBack = useCallback((track) => {
-    if (selectedAuthor.length > 0 && !selectedAuthor.includes(track.author))
-      return false;
-    if (
-      selectedDates.length > 0 &&
-      !selectedDates.includes(track.release_date.slice(0, 4))
-    )
-      return false;
-    if (
-      selectedGenres.length > 0 &&
-      !track.genre.some((el) => selectedGenres.includes(el))
-    )
-      return false;
-    if (
-      inputSearchText &&
-      !track.name.toLowerCase().includes(inputSearchText.toLowerCase())
-    ) {
-      return false;
-    }
-    return true;
-  }, [ selectedAuthor, selectedDates, selectedGenres, inputSearchText]);
-
-  const filteredTracks = useMemo(()=>{
-    return tracks.filter((track) => filteredCallBack(track))
-
-
-
-  }, [tracks,selectedAuthor, selectedDates, selectedGenres, inputSearchText]
-
+  const filteredCallBack = useCallback(
+    (track) => {
+      if (selectedAuthor.length > 0 && !selectedAuthor.includes(track.author))
+        return false;
+      if (
+        selectedDates.length > 0 &&
+        !selectedDates.includes(track.release_date.slice(0, 4))
+      )
+        return false;
+      if (
+        selectedGenres.length > 0 &&
+        !track.genre.some((el) => selectedGenres.includes(el))
+      )
+        return false;
+      if (
+        inputSearchText &&
+        !track.name.toLowerCase().includes(inputSearchText.toLowerCase())
+      ) {
+        return false;
+      }
+      return true;
+    },
+    [selectedAuthor, selectedDates, selectedGenres, inputSearchText]
   );
+
+  const filteredTracks = useMemo(() => {
+    return tracks.filter((track) => filteredCallBack(track));
+  }, [tracks, selectedAuthor, selectedDates, selectedGenres, inputSearchText]);
+
+  useEffect(() => {
+    const getFavoriteTracks = async () => {
+      const response = await getAllFavoriteTracks();
+      if (response) {
+        dispatch(setFavoriteList(response.data));
+      }
+    };
+    getFavoriteTracks();
+  }, [isAuthUser]);
 
   return (
     <div className={styles.contentPlaylist}>

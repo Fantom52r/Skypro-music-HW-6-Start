@@ -20,7 +20,7 @@ const Track = ({
     (state: RootState) => state.tracks.favoriteList
   );
   const isLiked = favoriteTracks.some((element) => element._id === track._id);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleClickLikeTrack = () => {
     if (isAuthUser) {
@@ -33,15 +33,9 @@ const Track = ({
       toast.error("Необходимо авторизоваться");
     }
   };
-  // useEffect(() => {
-  //   const getFavoriteTracks = async () => {
-  //     const response = await getAllFavoriteTracks();
-  //     if (response) {
-  //       dispatch(setFavoriteList(response.data));
-  //     }
-  //   };
-  //   getFavoriteTracks();
-  // }, []);
+  // const isAuthUser = useSelector((state: RootState) => state.auth.authState);
+  // console.log(isAuthUser);
+
   return (
     <div key={track._id} className={styles.playlistItem}>
       <div className={styles.playlistTrack}>
